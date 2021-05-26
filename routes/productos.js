@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var multer = require('../libs/multer')
 let controller = require('../controllers/productoController');
 
 // WS listar registros
@@ -13,9 +14,13 @@ router.get('/mostrar/:id', function(req, res, next) {
 });
 
 // WS crear registro
-router.post('/', function(req, res){
-  controller.store(req, res);
-});
+router.route('/')
+    .post(multer.single('image'), function(req, res) {
+      controller.store(req, res);
+    });
+// router.post('/', function(req, res){
+//   controller.store(req, res);
+// });
 
 // WS actualizar registro
 router.put('/', function(req, res){
